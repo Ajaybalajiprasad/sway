@@ -35,10 +35,7 @@ Before you begin, ensure you have the necessary packages installed on your syste
 *   **`sway`**: The tiling Wayland compositor.
 *   **`waybar`**: A highly customizable Wayland status bar.
 *   **`rofi`**: A powerful window switcher, application launcher, and dmenu replacement.
-*   **`swaylock-effects`**: A screen locker for Wayland with added visual effects.
 *   **`alacritty`**: A fast, GPU-accelerated terminal emulator.
-*   **`noto-fonts-emoji`**: For proper emoji rendering.
-*   **`git`**: For cloning this repository.
 
 ### Package Installation
 
