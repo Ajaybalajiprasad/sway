@@ -1,0 +1,320 @@
+# ╔══════════════════════════════════════════════════════════════════════════════╗
+# ║                              SWAY CONFIGURATION                             ║
+# ║                    Copy this to ~/.config/sway/config                       ║
+# ║                   Read `man 5 sway` for complete reference                  ║
+# ╚══════════════════════════════════════════════════════════════════════════════╝
+
+# ┌──────────────────────────────────────────────────────────────────────────────┐
+# │                               CORE VARIABLES                                │
+# └──────────────────────────────────────────────────────────────────────────────┘
+
+# Modifier key (Windows/Super key)
+set $mod Mod4
+
+# Vim-style directional keys
+set $left  h
+set $down  j
+set $up    k
+set $right l
+
+# Applications
+set $term     foot
+set $rofi_cmd rofi
+set $menu     $rofi_cmd -show drun -display-drun "Apps"
+
+# ┌──────────────────────────────────────────────────────────────────────────────┐
+# │                              VISUAL SETTINGS                                │
+# └──────────────────────────────────────────────────────────────────────────────┘
+
+# Window opacity settings
+for_window [app_id="foot"] opacity 0.80
+exec swaymsg opacity 0.95
+
+# ┌──────────────────────────────────────────────────────────────────────────────┐
+# │                              STARTUP PROGRAMS                               │
+# └──────────────────────────────────────────────────────────────────────────────┘
+
+# Status bar (uncomment to enable)
+exec_always waybar
+
+# Wallpaper (uncomment and set path)
+#exec_always swaybg -i /home/kodliebe/Pictures/telepics/quit-wallpaper.jpg --mode fill
+
+# Notification manager
+exec dunst
+
+# Clipboard manager
+exec wl-paste --watch cliphist store
+
+# Screen sharing setup
+exec dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=sway
+exec systemctl --user import-environment WAYLAND_DISPLAY XDG_CURRENT_DESKTOP
+exec systemctl --user import-environment XDG_CURRENT_DESKTOP
+exec hash dbus-update-activation-environment 2>/dev/null && \
+     dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP
+
+# ┌──────────────────────────────────────────────────────────────────────────────┐
+# │                             DISPLAY CONFIGURATION                           │
+# └──────────────────────────────────────────────────────────────────────────────┘
+
+# Multi-monitor setup example
+# output HDMI-A-1 resolution 1920x1080 position 1920,0
+# You can get the names of your outputs by running: swaymsg -t get_outputs
+
+# ┌──────────────────────────────────────────────────────────────────────────────┐
+# │                               IDLE MANAGEMENT                               │
+# └──────────────────────────────────────────────────────────────────────────────┘
+
+exec_always {
+   swayidle -w \
+       timeout 120 'swaylock -f --config ~/.config/swaylock/config' \
+       timeout 180 'swaymsg "output * dpms off"' \
+       resume 'swaymsg "output * dpms on"' \
+       before-sleep 'swaylock -f --config ~/.config/swaylock/config'
+}
+
+# ┌──────────────────────────────────────────────────────────────────────────────┐
+# │                        CAFFEINE-LIKE FUNCTIONALITY                          │
+# └──────────────────────────────────────────────────────────────────────────────┘
+
+# Create a toggle for staying awake
+bindsym $mod+c exec ~/.config/sway/scripts/caffeine-toggle.sh
+
+# ┌──────────────────────────────────────────────────────────────────────────────┐
+# │                              INPUT CONFIGURATION                            │
+# └──────────────────────────────────────────────────────────────────────────────┘
+
+input "1267:12541:ELAN0712:00_04F3:30FD_Touchpad" {
+    tap enabled                # Enable tap-to-click
+    natural_scroll enabled     # Enable natural scrolling
+    scroll_method two_finger   # Use two-finger scrolling
+    dwt enabled                # Enable disable-while-typing
+}
+
+# You can get the names of your inputs by running: swaymsg -t get_inputs
+# Read `man 5 sway-input` for more information about this section.
+
+# ┌──────────────────────────────────────────────────────────────────────────────┐
+# │                             APPLICATION SHORTCUTS                           │
+# └──────────────────────────────────────────────────────────────────────────────┘
+
+# Terminal
+bindsym $mod+t exec $term
+
+# Web Browsers
+bindsym $mod+Shift+f exec firefox
+bindsym $mod+Shift+b exec brave-browser
+
+# File Manager
+bindsym $mod+Shift+e exec thunar
+
+# Application Launchers
+bindsym $mod+d exec $rofi_cmd -show drun -display-drun "Apps"
+bindsym $mod+Shift+d exec $rofi_cmd -show run -display-run "Run"
+bindsym $mod+Tab exec $rofi_cmd -show window -display-window "Windows"
+
+# ┌──────────────────────────────────────────────────────────────────────────────┐
+# │                              MEDIA & VOLUME CONTROLS                        │
+# └──────────────────────────────────────────────────────────────────────────────┘
+
+# Audio Controls
+bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle
+bindsym XF86AudioRaiseVolume exec pactl set-sink-volume @DEFAULT_SINK@ +5%
+bindsym XF86AudioLowerVolume exec pactl set-sink-volume @DEFAULT_SINK@ -5%
+
+# Brightness Controls
+bindsym XF86MonBrightnessDown exec brightnessctl set 5%-
+bindsym XF86MonBrightnessUp exec sudo brightnessctl set +5%
+
+# ┌──────────────────────────────────────────────────────────────────────────────┐
+# │                              SCREENSHOT CONTROLS                            │
+# └──────────────────────────────────────────────────────────────────────────────┘
+
+# Full screen screenshot
+bindsym Print exec grim ~/Pictures/screenshot-$(date +%s).png && \
+                   notify-send "📸 Screenshot taken"
+
+# Area selection screenshot to clipboard
+bindsym Shift+Print exec grim -g "$(slurp)" - | wl-copy && \
+                         notify-send "📋 Screenshot copied to clipboard"
+
+# Screen recording
+bindsym $mod+Shift+r exec sway-recorder -f ~/recordings/recording-$(date +"%Y-%m-%d-%H-%M-%S").mp4
+
+# ┌──────────────────────────────────────────────────────────────────────────────┐
+# │                              SYSTEM ACTIONS                                 │
+# └──────────────────────────────────────────────────────────────────────────────┘
+
+# Power Management
+bindsym $mod+Ctrl+u exec shutdown now
+bindsym $mod+Ctrl+l exec swaylock -f --config ~/.config/swaylock/config && systemctl suspend
+
+# Window Management
+bindsym $mod+q kill
+bindsym $mod+Shift+c reload
+
+# Mouse settings
+floating_modifier $mod normal
+
+# ┌──────────────────────────────────────────────────────────────────────────────┐
+# │                              WINDOW NAVIGATION                              │
+# └──────────────────────────────────────────────────────────────────────────────┘
+
+# Focus Movement (Vim keys)
+bindsym $mod+$left  focus left
+bindsym $mod+$down  focus down
+bindsym $mod+$up    focus up
+bindsym $mod+$right focus right
+
+# Focus Movement (Arrow keys)
+bindsym $mod+Left  focus left
+bindsym $mod+Down  focus down
+bindsym $mod+Up    focus up
+bindsym $mod+Right focus right
+
+# Window Movement (Vim keys)
+bindsym $mod+Shift+$left  move left
+bindsym $mod+Shift+$down  move down
+bindsym $mod+Shift+$up    move up
+bindsym $mod+Shift+$right move right
+
+# Window Movement (Arrow keys)
+bindsym $mod+Shift+Left  move left
+bindsym $mod+Shift+Down  move down
+bindsym $mod+Shift+Up    move up
+bindsym $mod+Shift+Right move right
+
+# ┌──────────────────────────────────────────────────────────────────────────────┐
+# │                              WORKSPACE NAVIGATION                           │
+# └──────────────────────────────────────────────────────────────────────────────┘
+
+# Switch to workspace
+bindsym $mod+1 workspace number 1
+bindsym $mod+2 workspace number 2
+bindsym $mod+3 workspace number 3
+bindsym $mod+4 workspace number 4
+bindsym $mod+5 workspace number 5
+bindsym $mod+6 workspace number 6
+bindsym $mod+7 workspace number 7
+bindsym $mod+8 workspace number 8
+bindsym $mod+9 workspace number 9
+bindsym $mod+0 workspace number 10
+
+# Move focused container to workspace
+bindsym $mod+Shift+1 move container to workspace number 1
+bindsym $mod+Shift+2 move container to workspace number 2
+bindsym $mod+Shift+3 move container to workspace number 3
+bindsym $mod+Shift+4 move container to workspace number 4
+bindsym $mod+Shift+5 move container to workspace number 5
+bindsym $mod+Shift+6 move container to workspace number 6
+bindsym $mod+Shift+7 move container to workspace number 7
+bindsym $mod+Shift+8 move container to workspace number 8
+bindsym $mod+Shift+9 move container to workspace number 9
+bindsym $mod+Shift+0 move container to workspace number 10
+
+# ┌──────────────────────────────────────────────────────────────────────────────┐
+# │                               WINDOW LAYOUTS                                │
+# └──────────────────────────────────────────────────────────────────────────────┘
+
+# Layout Controls
+bindsym $mod+b splith
+bindsym $mod+v splitv
+bindsym $mod+s layout stacking
+bindsym $mod+w layout tabbed
+bindsym $mod+e layout toggle split
+
+# Fullscreen and Floating
+bindsym $mod+f fullscreen
+bindsym $mod+Shift+space floating toggle
+bindsym $mod+space focus mode_toggle
+
+# Focus parent container
+bindsym $mod+a focus parent
+
+# ┌──────────────────────────────────────────────────────────────────────────────┐
+# │                               TOUCHPAD GESTURES                             │
+# └──────────────────────────────────────────────────────────────────────────────┘
+
+# Workspace switching with gestures (uncomment to enable)
+#bindgesture swipe:3:right workspace prev
+#bindgesture swipe:3:left workspace next
+
+# ┌──────────────────────────────────────────────────────────────────────────────┐
+# │                                SCRATCHPAD                                   │
+# └──────────────────────────────────────────────────────────────────────────────┘
+
+bindsym $mod+Shift+minus move scratchpad
+bindsym $mod+minus scratchpad show
+
+# ┌──────────────────────────────────────────────────────────────────────────────┐
+# │                                RESIZE MODE                                  │
+# └──────────────────────────────────────────────────────────────────────────────┘
+
+mode "resize" {
+    # Resize with Vim keys
+    bindsym $left  resize shrink width 10px
+    bindsym $down  resize grow height 10px
+    bindsym $up    resize shrink height 10px
+    bindsym $right resize grow width 10px
+
+    # Resize with Arrow keys
+    bindsym Left  resize shrink width 10px
+    bindsym Down  resize grow height 10px
+    bindsym Up    resize shrink height 10px
+    bindsym Right resize grow width 10px
+
+    # Return to default mode
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+
+bindsym $mod+r mode "resize"
+
+# ┌──────────────────────────────────────────────────────────────────────────────┐
+# │                              CLIPBOARD MANAGEMENT                           │
+# └──────────────────────────────────────────────────────────────────────────────┘
+
+bindsym $mod+Shift+v exec cliphist list | wofi -S dmenu | cliphist decode | wl-copy
+
+# ┌──────────────────────────────────────────────────────────────────────────────┐
+# │                              STATUS BAR CONFIGURATION                       │
+# └──────────────────────────────────────────────────────────────────────────────┘
+
+# Default status bar (commented out - using waybar instead)
+#bar {
+#    position top
+#    status_command while date +'%Y-%m-%d %X'; do sleep 1; done
+#
+#    colors {
+#        statusline #ffffff
+#        background #323232
+#        inactive_workspace #32323200 #32323200 #5c5c5c
+#    }
+#}
+
+# ┌──────────────────────────────────────────────────────────────────────────────┐
+# │                              ADDITIONAL CONFIGURATIONS                      │
+# └──────────────────────────────────────────────────────────────────────────────┘
+
+# Include additional configuration files from multiple locations
+include '$(/usr/libexec/sway/layered-include \
+    "/usr/share/sway/config.d/*.conf" \
+    "/etc/sway/config.d/*.conf" \
+    "${XDG_CONFIG_HOME:-$HOME/.config}/sway/config.d/*.conf")'
+
+# ┌──────────────────────────────────────────────────────────────────────────────┐
+# │                                  NOTES                                      │
+# └──────────────────────────────────────────────────────────────────────────────┘
+
+# Configuration hierarchy:
+#  - /usr/share/sway/config.d     (system defaults)
+#  - /etc/sway/config.d           (system overrides)
+#  - ~/.config/sway/config.d      (user overrides)
+#
+# Later directories take precedence over earlier ones.
+# To disable default bars from system configs:
+#     echo -n > "$HOME/.config/sway/config.d/90-bar.conf"
+
+# ╔══════════════════════════════════════════════════════════════════════════════╗
+# ║                               END OF CONFIG                                 ║
+# ╚══════════════════════════════════════════════════════════════════════════════╝
