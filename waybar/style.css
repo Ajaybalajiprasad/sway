@@ -1,115 +1,73 @@
-
+/* Global styles */
 * {
-
     border: none;
-
     border-radius: 0;
-
     font-family: "Monospace", "Font Awesome 5 Free";
-
     font-size: 12px;
-
     min-height: 0;
-
     color: white;
-
 }
 
+/* Waybar window styling */
 window#waybar {
-
     background: rgba(10, 10, 10, 0.8);
-
     border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-
     color: white;
-
-    backdrop-filter: blur(5px);
-
 }
 
+/* Workspace button styling */
 #workspaces button {
-
     padding: 0 5px;
-
     background: transparent;
-
     color: white;
-
     border-bottom: 3px solid transparent;
-
 }
 
 #workspaces button.focused {
-
     border-bottom: 3px solid white;
-
     background: rgba(255, 255, 255, 0.1);
-
 }
 
 #workspaces button:hover {
-
     background: rgba(255, 255, 255, 0.15);
-
 }
 
 #workspaces button.urgent {
-
     background: rgba(255, 255, 255, 0.4);
-
 }
 
+/* Status indicators (clock, battery, CPU, etc.) */
 #clock,
-
 #battery,
-
 #cpu,
-
 #memory,
-
 #backlight,
-
 #network,
-
 #pulseaudio,
-
 #tray,
-
 #mode {
-
     padding: 0 10px;
-
     margin: 0 3px;
-
     background: transparent;
-
     border-left: 1px solid rgba(255, 255, 255, 0.1);
-
 }
 
+/* Battery status */
 #battery.critical {
-
     color: #ff5555;
-
 }
 
-#battery.charging, #battery.plugged {
-
+#battery.charging,
+#battery.plugged {
     color: #d8dee9;
-
 }
 
+/* Tooltip styling */
 tooltip {
-
     background: rgba(10, 10, 10, 0.9);
-
     border: 1px solid rgba(255, 255, 255, 0.2);
-
 }
 
 tooltip label {
-
     color: white;
-
 }
-
