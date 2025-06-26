@@ -12,7 +12,7 @@ if [ -f "$CAFFEINE_FILE" ]; then
     # Caffeine is active, turn it off
     rm "$CAFFEINE_FILE"
     
-    # Re-enable swayidle
+    # Re-enable swayidle to lock screen automatically
     pkill swayidle
     exec swayidle -w \
         timeout 300 'if pgrep -x swaylock; then exit 0; fi; \
@@ -26,13 +26,21 @@ if [ -f "$CAFFEINE_FILE" ]; then
         resume 'swaymsg "output * dpms on"' \
         before-sleep 'swaylock -f --config ~/.config/swaylock/config' &
     
+    # Notify and update caffeine status
     notify-send "☕ Caffeine OFF" "Screen will lock normally" -t 3000
+    echo "off" > "$CAFFEINE_FILE"
+    # Update Waybar Caffeine Status
+    swaymsg "run 'waybar-msg caffeine off'"
 else
     # Caffeine is not active, turn it on
     touch "$CAFFEINE_FILE"
     
-    # Kill swayidle to prevent locking
+    # Kill swayidle to prevent screen locking
     pkill swayidle
     
+    # Notify and update caffeine status
     notify-send "☕ Caffeine ON" "Screen will not lock automatically" -t 3000
+    echo "on" > "$CAFFEINE_FILE"
+    # Update Waybar Caffeine Status
+    swaymsg "run 'waybar-msg caffeine on'"
 fi

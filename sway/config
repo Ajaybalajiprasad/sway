@@ -38,7 +38,7 @@ exec swaymsg opacity 0.95
 exec_always waybar
 
 # Wallpaper (uncomment and set path)
-#exec_always swaybg -i /home/kodliebe/Pictures/telepics/quit-wallpaper.jpg --mode fill
+exec_always swaybg -i /home/kodliebe/Pictures/telepics/quit-wallpaper.jpg --mode fill
 
 # Notification manager
 exec dunst

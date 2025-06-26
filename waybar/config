@@ -1,141 +1,80 @@
-
 {
-
     "layer": "top",
-
     "position": "top",
-
     "height": 30,
-
     "spacing": 8,
-
-    "modules-left": ["sway/workspaces", "sway/mode"],
-
+    "modules-left": ["caffeine", "sway/workspaces", "sway/mode"],
     "modules-center": ["clock"],
-
     "modules-right": ["pulseaudio", "network", "backlight", "cpu", "memory", "battery", "tray"],
 
-    
-
     "sway/workspaces": {
-
         "disable-scroll": true,
-
         "all-outputs": true,
-
         "format": "{name}"
-
     },
-
-    
 
     "sway/mode": {
-
         "format": "<span style=\"italic\">{}</span>"
-
     },
-
-    
 
     "clock": {
-
         "format": "{:%H:%M %d/%m/%Y}",
-
         "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>"
-
     },
-
-    
 
     "cpu": {
-
-        "format": "CPU {usage}%",
-
+        "format": " {usage}%",
         "interval": 5
-
     },
-
-    
 
     "memory": {
-
-        "format": "MEM {}%",
-
+        "format": " {used}MB / {total}MB",
         "interval": 5
-
     },
-
-    
 
     "backlight": {
-
-        "format": "BRI {percent}%",
-
+        "format": " {percent}%",
         "on-scroll-up": "light -A 5",
-
         "on-scroll-down": "light -U 5"
-
     },
-
-    
 
     "battery": {
-
         "states": {
-
             "warning": 30,
-
             "critical": 15
-
         },
-
-        "format": "BAT {capacity}%",
-
-        "format-charging": "CHR {capacity}%",
-
-        "format-plugged": "PWR {capacity}%",
-
-        "format-alt": "BAT {capacity}% ({time})"
-
+        "format": " {capacity}%",
+        "format-charging": " {capacity}%",
+        "format-plugged": " {capacity}%",
+        "format-alt": " {capacity}% ({time})"
     },
-
-    
 
     "network": {
-
-        "format-wifi": "WIFI {signalStrength}%",
-
-        "format-ethernet": "ETH",
-
-        "format-linked": "ETH",
-
-        "format-disconnected": "NO NET",
-
+        "format-wifi": " {signalStrength}%",
+        "format-ethernet": " ETH",
+        "format-linked": " ETH",
+        "format-disconnected": "睊 NO NET",
         "format-alt": "{ifname}: {ipaddr}"
-
     },
-
-    
 
     "pulseaudio": {
-
-        "format": "VOL {volume}%",
-
-        "format-muted": "MUTE",
-
+        "format": " {volume}%",
+        "format-muted": " MUTE",
         "on-click": "pavucontrol"
-
     },
 
-    
-
     "tray": {
-
         "icon-size": 18,
-
         "spacing": 10
+    },
 
+    "caffeine": {
+        "format": "{icon} Caffeine: {state}",
+        "icon": "",  // Font Awesome caffeine icon
+        "exec": "bash -c 'cat /tmp/caffeine_active 2>/dev/null || echo off'",
+        "tooltip": "Toggle Caffeine Mode",
+        "on-click": "bash ~/.config/sway/scripts/caffeine-toggle.sh",
+        "on-click-right": "bash ~/.config/sway/scripts/caffeine-toggle.sh",
+        "state": "off"
     }
-
 }
-

@@ -1,45 +1,116 @@
+/* Minimal Black & White Glassy Theme */
 * {
-    background-color:  #1d1f21;
-    text-color:        #ffffff;
-    accent-color:      #5294e2;
+    background-color: rgba(0, 0, 0, 0.8);
+    text-color: #ffffff;
+    border-color: rgba(255, 255, 255, 0.2);
+    separatorcolor: rgba(255, 255, 255, 0.1);
 }
 
+/* Window - Glass effect */
 window {
-    width:             30%;
-    padding:           20px;
-    border-color:      @accent-color;
-    border-width:      2px;
-    border-radius:     8px;
+    width: 25%;
+    padding: 15px;
+    border: 1px solid;
+    border-color: rgba(255, 255, 255, 0.3);
+    border-radius: 12px;
+    background-color: rgba(0, 0, 0, 0.7);
+    transparency: "real";
 }
 
-listview {
-    lines:             10;
-    columns:           1;
-    spacing:           4px;
-}
-
-entry {
-    padding:           10px;
-    margin:            10px 0;
-    border-color:      @accent-color;
-    border-width:      1px;
-    border-radius:     4px;
-}
-
+/* Main Container */
 mainbox {
-    border-color:      @accent-color;
-    border-width:      0px;
-    padding:           10px;
+    border: 0px;
+    padding: 10px;
+    background-color: transparent;
+    children: [inputbar, listview, mode-switcher];
+    spacing: 15px;
 }
 
+/* Input Bar - Glass effect */
 inputbar {
-    children:          [prompt, entry];
-    background-color:  @background-color;
+    children: [prompt, entry];
+    background-color: rgba(255, 255, 255, 0.05);
+    spacing: 0px;
+    border-radius: 8px;
+    border: 1px solid;
+    border-color: rgba(255, 255, 255, 0.1);
 }
 
+/* Prompt */
 prompt {
-    enabled:           true;
-    padding:           10px;
-    background-color:  @background-color;
-    text-color:        @accent-color;
+    padding: 12px 15px;
+    background-color: rgba(255, 255, 255, 0.1);
+    text-color: #ffffff;
+    border-radius: 8px 0px 0px 8px;
+}
+
+/* Entry Field */
+entry {
+    padding: 12px 15px;
+    background-color: transparent;
+    text-color: #ffffff;
+    border-radius: 0px 8px 8px 0px;
+    expand: true;
+}
+
+/* List */
+listview {
+    lines: 6;
+    spacing: 2px;
+    background-color: transparent;
+    border: 0px;
+    padding: 5px 0px;
+}
+
+/* Elements */
+element {
+    padding: 10px 15px;
+    border-radius: 6px;
+    background-color: transparent;
+    text-color: #ffffff;
+    children: [element-icon, element-text];
+    spacing: 10px;
+}
+
+element selected {
+    background-color: rgba(255, 255, 255, 0.1);
+    text-color: #ffffff;
+    border: 1px solid;
+    border-color: rgba(255, 255, 255, 0.2);
+}
+
+/* Element Text */
+element-text {
+    background-color: transparent;
+    text-color: inherit;
+    expand: true;
+    vertical-align: 0.5;
+}
+
+/* Element Icon */
+element-icon {
+    background-color: transparent;
+    size: 20px;
+    vertical-align: 0.5;
+}
+
+/* Mode Switcher */
+mode-switcher {
+    background-color: transparent;
+    spacing: 5px;
+}
+
+button {
+    padding: 8px 15px;
+    background-color: rgba(255, 255, 255, 0.05);
+    text-color: rgba(255, 255, 255, 0.7);
+    border: 1px solid;
+    border-color: rgba(255, 255, 255, 0.1);
+    border-radius: 6px;
+}
+
+button selected {
+    background-color: rgba(255, 255, 255, 0.15);
+    text-color: #ffffff;
+    border-color: rgba(255, 255, 255, 0.3);
 }
