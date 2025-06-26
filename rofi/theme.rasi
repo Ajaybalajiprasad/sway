@@ -1,0 +1,45 @@
+* {
+    background-color:  #1d1f21;
+    text-color:        #ffffff;
+    accent-color:      #5294e2;
+}
+
+window {
+    width:             30%;
+    padding:           20px;
+    border-color:      @accent-color;
+    border-width:      2px;
+    border-radius:     8px;
+}
+
+listview {
+    lines:             10;
+    columns:           1;
+    spacing:           4px;
+}
+
+entry {
+    padding:           10px;
+    margin:            10px 0;
+    border-color:      @accent-color;
+    border-width:      1px;
+    border-radius:     4px;
+}
+
+mainbox {
+    border-color:      @accent-color;
+    border-width:      0px;
+    padding:           10px;
+}
+
+inputbar {
+    children:          [prompt, entry];
+    background-color:  @background-color;
+}
+
+prompt {
+    enabled:           true;
+    padding:           10px;
+    background-color:  @background-color;
+    text-color:        @accent-color;
+}
