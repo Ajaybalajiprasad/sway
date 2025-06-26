@@ -2,22 +2,43 @@
 
 **A sleek, minimal, and efficient configuration for the Sway tiling window manager.**
 
-This repository provides a complete, plug-and-play setup for a modern Wayland desktop environment, built around Sway. It includes curated configurations for essential tools like Rofi, Waybar, and Swaylock, ensuring a cohesive and beautiful user experience out of the box.
+This repository provides a complete, plug-and-play setup for a modern Wayland desktop environment, built around Sway. Just clone and follow the instructions **"Because manually configuring a tiling WM is *so* 2010."**  .
 
-![License](https://img.shields.io/badge/license-MIT-blue.svg)![Maintained](https://img.shields.io/badge/Maintained%3F-yes-green.svg)
+![License](https://img.shields.io/badge/license-MIT-blue.svg)  ![Maintained](https://img.shields.io/badge/Maintained%3F-Yes...%20for%20now-red.svg)  
+![Dependencies](https://img.shields.io/badge/Dependencies-Only%2072%20hidden%20ones-yellowgreen)  
 
 
 
 ---
 
-## ✨ Features
+# 🧰 *"It Just Works"* Features  
+*(Sway™-brand magic included)*  
 
-*   **Minimalist Design**: A clean, distraction-free aesthetic that prioritizes content.
-*   **Lightweight & Fast**: Optimized for performance on a wide range of hardware.
-*   **Integrated Tooling**: Pre-configured Rofi, Waybar, and Swaylock for a seamless workflow.
-*   **Sensible Keybindings**: Intuitive shortcuts for window management, application launching, and system controls.
-*   **Easy Customization**: Well-organized and commented files make personalization simple.
-*   **Beginner Friendly**: Get a fully functional tiling window manager running in minutes.
+![Stability](https://img.shields.io/badge/Stability-LOL-critical)  
+![Debugging](https://img.shields.io/badge/Debugging-Required-ff69b4)  
+
+---
+
+### ✨ **Curated Pain Points** ✨  
+
+| *Advertised*          | *Reality*                                                                 |
+|-----------------------|---------------------------------------------------------------------------|
+| **Minimalist Design** | "Clean" = 6px gaps between windows and existential dread                 |
+| **Lightweight**       | Only consumes 2GB RAM... until you open Firefox                          |
+| **Integrated Tools**  | `waybar` crashes if you blink at it wrong                                |
+| **Sensible Keys**     | `$mod+Shift+Alt+Ctrl+Q` to close a window (just kidding... or are we?)   |
+| **Easy Customization**| "Well-commented" = `# FIXME: This breaks everything (2017)`              |
+| **Beginner Friendly** | "Minutes" assumes you've already sacrificed a goat to the Wayland gods   |
+
+---
+
+### 🔥 **Bonus Round**  
+- **Font Rendering**: *Optional* (may require blood sacrifice)  
+- **Multi-Monitor**: Works flawlessly*  
+  **`*`** *On Tuesdays during a full moon*  
+- **Community Support**: *"Read the source code"* — Some dev on GitHub  
+
+---
 
 ## 📋 Table of Contents
 
