@@ -18,7 +18,7 @@ set $up    k
 set $right l
 
 # Applications
-set $term     foot
+set $term     alacritty
 set $rofi_cmd rofi
 set $menu     $rofi_cmd -show drun -display-drun "Apps"
 
@@ -27,7 +27,7 @@ set $menu     $rofi_cmd -show drun -display-drun "Apps"
 # └──────────────────────────────────────────────────────────────────────────────┘
 
 # Window opacity settings
-for_window [app_id="foot"] opacity 0.80
+for_window [app_id="alacritty"] opacity 0.50
 exec swaymsg opacity 0.95
 
 # ┌──────────────────────────────────────────────────────────────────────────────┐
@@ -38,7 +38,7 @@ exec swaymsg opacity 0.95
 exec_always waybar
 
 # Wallpaper (uncomment and set path)
-exec_always swaybg -i /home/kodliebe/Pictures/telepics/quit-wallpaper.jpg --mode fill
+exec_always swaybg -i /home/kodliebe/Pictures/telepics/dark-black-panther.jpg --mode fill
 
 # Notification manager
 exec dunst
@@ -148,6 +148,7 @@ bindsym $mod+Shift+r exec sway-recorder -f ~/recordings/recording-$(date +"%Y-%m
 # Power Management
 bindsym $mod+Ctrl+u exec shutdown now
 bindsym $mod+Ctrl+l exec swaylock -f --config ~/.config/swaylock/config && systemctl suspend
+bindsym $mod+Escape exec ~/.config/rofi/scripts/power-menu.sh
 
 # Window Management
 bindsym $mod+q kill
