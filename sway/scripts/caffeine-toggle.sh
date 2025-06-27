@@ -1,5 +1,4 @@
 #!/bin/bash
-
 # ╔══════════════════════════════════════════════════════════════════════════════╗
 # ║                          CAFFEINE TOGGLE SCRIPT                             ║
 # ║                Save as ~/.config/sway/scripts/caffeine-toggle.sh             ║
@@ -14,7 +13,9 @@ if [ -f "$CAFFEINE_FILE" ]; then
     
     # Re-enable swayidle to lock screen automatically
     pkill swayidle
-    exec swayidle -w \
+    
+    # Start swayidle in background (remove exec and add &)
+    swayidle -w \
         timeout 300 'if pgrep -x swaylock; then exit 0; fi; \
                      if playerctl status 2>/dev/null | grep -q Playing; then exit 0; fi; \
                      if pgrep -f "meet.google.com\|zoom\|teams\|discord\|slack" >/dev/null; then exit 0; fi; \
@@ -26,11 +27,14 @@ if [ -f "$CAFFEINE_FILE" ]; then
         resume 'swaymsg "output * dpms on"' \
         before-sleep 'swaylock -f --config ~/.config/swaylock/config' &
     
-    # Notify and update caffeine status
+    # Notify user
     notify-send "☕ Caffeine OFF" "Screen will lock normally" -t 3000
-    echo "off" > "$CAFFEINE_FILE"
-    # Update Waybar Caffeine Status
-    swaymsg "run 'waybar-msg caffeine off'"
+    
+    # Update Waybar if available
+    if command -v waybar >/dev/null 2>&1 && pgrep -x waybar >/dev/null; then
+        pkill -SIGUSR1 waybar 2>/dev/null || true
+    fi
+    
 else
     # Caffeine is not active, turn it on
     touch "$CAFFEINE_FILE"
@@ -38,9 +42,11 @@ else
     # Kill swayidle to prevent screen locking
     pkill swayidle
     
-    # Notify and update caffeine status
+    # Notify user
     notify-send "☕ Caffeine ON" "Screen will not lock automatically" -t 3000
-    echo "on" > "$CAFFEINE_FILE"
-    # Update Waybar Caffeine Status
-    swaymsg "run 'waybar-msg caffeine on'"
+    
+    # Update Waybar if available
+    if command -v waybar >/dev/null 2>&1 && pgrep -x waybar >/dev/null; then
+        pkill -SIGUSR1 waybar 2>/dev/null || true
+    fi
 fi
